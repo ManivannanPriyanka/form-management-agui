@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="copyIcon_Yeilding" transform="translate(1970 -804)">
+    <g id="Group_144521" data-name="Group 144521" transform="translate(-1946 828) rotate(180)">
+      <g id="Group_144519" data-name="Group 144519">
+        <rect id="Rectangle_138625" data-name="Rectangle 138625" width="24" height="24" fill="none"/>
+      </g>
+      <g id="Group_144520" data-name="Group 144520">
+        <path id="Path_108662" data-name="Path 108662" d="M15.706,20H5.118V7A1.034,1.034,0,0,0,4.059,6h0A1.034,1.034,0,0,0,3,7V20a2.067,2.067,0,0,0,2.118,2H15.706a1.034,1.034,0,0,0,1.059-1h0a1.034,1.034,0,0,0-1.059-1ZM21,16V4a2.067,2.067,0,0,0-2.118-2H9.353A2.067,2.067,0,0,0,7.235,4V16a2.067,2.067,0,0,0,2.118,2h9.529A2.067,2.067,0,0,0,21,16Zm-2.118,0H9.353V4h9.529Z" fill="#02add0"/>
+      </g>
+    </g>
+  </g>
+</svg>

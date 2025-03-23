@@ -1,0 +1,38 @@
+@import '../../../styles.scss';
+
+.edit-icon {
+    background: url('../../../assets/icons/edit.svg') center/cover no-repeat;
+}
+
+.drawer-animation {
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+}
+
+.overlay-bg {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.delete-icon {
+    background: url('../../../assets/icons/delete.svg') center/cover no-repeat;
+}
+
+.search:focus {
+    // $primary-border: #2196f3;
+    outline: none;
+    border: 1px solid $primary-color;
+    box-shadow: 0 0 5px $primary-color;
+}
+
+.add-icon {
+    background: url('../../../assets/icons/add.svg') center/cover no-repeat;
+}
+
+.border-bottom {
+    border-bottom: 1px solid $gray;
+}
+
+.border-blue {
+    border: 1px solid $primary-color;
+}
+

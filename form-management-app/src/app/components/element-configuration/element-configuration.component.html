@@ -1,0 +1,94 @@
+<div class="tw-p-5">
+        <div class="tw-flex tw-justify-end tw-mb-3">   
+            <i (click)="closeEditDrawer()" class="close-icon tw-inline-block tw-w-[10px] tw-h-[10px]"></i>
+        </div>
+        <ng-container *ngIf="formElement">
+        <div class="tw-flex tw-gap-2">
+            <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">Label</label>
+                <input type="text" [(ngModel)]="formElement.label" class="class-input tw-color-gray-300"/>
+            </div>
+            
+            <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">Description</label>
+                <input type="text" [(ngModel)]="formElement.description" class="class-input tw-color-gray-300"/>
+            </div>
+        </div>
+        
+        <div class="tw-flex tw-gap-2">
+
+        <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">PLACEHOLDER</label>
+                <input type="text" [(ngModel)]="formElement.placeholder" class="class-input tw-color-gray-300"/>
+        </div>
+
+            <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">DEFAULT VALUE</label>
+                <input type="text" [(ngModel)]="formElement.defaultValue" class="class-input tw-color-gray-300"/>
+            </div>
+        </div>
+
+        <div class="tw-flex tw-gap-2">
+
+            <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">MIN LENGTH</label>
+                <input type="text" [(ngModel)]="formElement.minLength" class="class-input tw-color-gray-300"/>
+            </div>
+
+            <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">MAX LENGTH</label>
+                <input type="text" [(ngModel)]="formElement.maxLength" class="class-input tw-color-gray-300"/>
+            </div>
+        
+        </div>
+
+        <div class="tw-flex tw-gap-2">
+
+
+            <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">MIN VALUE</label>
+                <input type="text" [(ngModel)]="formElement.minValue" class="class-input tw-color-gray-300"/>
+            </div>
+
+            <div class="tw-mb-3">
+                <label class="tw-font-bold tw-block tw-mb-2">MAX VALUE</label>
+                <input type="text" [(ngModel)]="formElement.maxValue" class="class-input tw-color-gray-300"/>
+            </div>
+
+        </div>
+
+        <div class="tw-mb-3 tw-flex tw-items-center">
+            <label class="tw-font-bold tw-block tw-mr-3">REQUIRED</label>
+            <input type="checkbox" [(ngModel)]="formElement.required" />
+        </div>
+
+        <div class="tw-mb-3 tw-flex tw-items-center">
+            <label class="tw-font-bold tw-block tw-mr-3">READ ONLY</label>
+            <input type="checkbox" [(ngModel)]="formElement.readOnly" />
+        </div>
+
+        <!-- <label>Options</label>
+        <p (click)="addNewOption()"> {{ 'Add Option' }}</p>
+        <div *ngFor="let option of formElement.options; let index = index">
+            <label>{{option.id}}</label>
+            <input type="text" [(ngModel)]="option.value" />
+            <i (click)="removeOption(index)" class="delete-icon tw-w-[10px] tw-h-[10px] tw-inline-block"></i>
+        </div> -->
+    </ng-container>
+    <ng-container *ngIf="!formElement">
+        <div class="tw-mb-3">
+            <label class="tw-font-bold tw-block tw-mb-2">Name</label>
+            <input type="text" [(ngModel)]="group.name" class="class-input tw-color-gray-300"/>
+        </div>
+        <div class="tw-mb-3">
+            <label class="tw-font-bold tw-block tw-mb-2">Description</label>
+            <input type="text" [(ngModel)]="group.description"  class="class-input tw-color-gray-300"/>
+        </div>
+    </ng-container>
+</div>
+
+<div class="tw-flex tw-justify-between tw-mt-5 tw-absolute tw-h-[50px] tw-bg-gray-200 tw-items-center tw-p-3 tw-w-full tw-bottom-0">
+    <button (click)="closeEditDrawer()" class="button">CANCEL</button>
+    <button (click)="saveChanges()" class="button" [ngClass]="{'button-disabled' : !formElement?.label && !group.name}">SAVE</button>
+</div>
+
