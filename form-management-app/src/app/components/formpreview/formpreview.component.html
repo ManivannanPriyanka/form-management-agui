@@ -1,0 +1,34 @@
+
+<div [formGroup]="dynamicForm">
+    <div class="tw-flex tw-justify-between tw-mb-2">
+        <div>
+            <b>{{selectedGroup.name}}</b>
+            <p class="tw-text-xs">{{selectedGroup.description}}</p>
+        </div>
+        <i class="tw-w-[10px] tw-h-[10px] tw-inline-block close-icon"></i>
+    </div>
+    <div *ngFor="let element of selectedGroup.formElements" class="tw-mb-2">
+        <label class="tw-font-bold tw-block tw-mb-2" >{{element.label}}</label>
+        <ng-container [ngSwitch]="element.type">
+            <input *ngSwitchCase="'text'" class="class-input" type="text" [formControlName]="element.label" />
+            <textarea *ngSwitchCase="'textarea'" class="class-input" [formControlName]="element.label"></textarea>
+            <input *ngSwitchCase="'number'" class="class-input" type="number" [formControlName]="element.label" />
+            <input *ngSwitchCase="'date'"  class="class-input" type="date" [formControlName]="element.label" />
+            <input *ngSwitchCase="'time'"  class="class-input" type="time" [formControlName]="element.label" />
+            <input *ngSwitchCase="'dateandtime'" type="datetime-local" class="class-input" [formControlName]="element.label" />
+            <input *ngSwitchCase="'checkbox'" type="checkbox" [formControlName]="element.label" />
+            <ng-container *ngSwitchCase="'radio'">
+                <div *ngFor="let option of element.options">
+                    <input type="radio" [formControlName]="element.label" [value]="option.value" />
+                    <label>{{option.value}}</label>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'dropdown'">
+                <select [formControlName]="element.label">
+                    <option *ngFor="let option of element.options" [value]="option.value">{{option.value}}</option>
+                </select>
+            </ng-container>
+            <input *ngSwitchCase="'file'" type="file" [formControlName]="element.label" />
+        </ng-container>
+    </div>
+</div>

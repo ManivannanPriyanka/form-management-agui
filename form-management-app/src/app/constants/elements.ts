@@ -9,16 +9,16 @@ export const ELEMENTS: Elements = {
         icon: 'text-icon'
     },
     {
-        type: 'textArea',
+        type: 'textarea',
         name: 'Multi Line Text',
         description: 'Multi text area',
-        icon: ''
+        icon: 'multi-line-icon'
     },
     {
         type: 'number',
         name: 'Integer',
         description: 'Integer type area',
-        icon: ''
+        icon: 'number-icon'
     }
     ],
     date: [
@@ -26,19 +26,19 @@ export const ELEMENTS: Elements = {
             type: 'date',
             name: 'Date',
             description: 'Select date from date picker',
-            icon: ''
+            icon: 'date-icon'
         },
         {
             type: 'time',
             name: 'Time',
             description: 'Select time from time picker',
-            icon: '' 
+            icon: 'time-icon' 
         },
         {
-            type: 'dateAndTime',
+            type: 'dateandtime',
             name: 'Date & Time',
             description: 'Select date and time from picker',
-            icon: ''
+            icon: 'date-and-time-icon'
         }
     ],
     multi: [
@@ -46,27 +46,27 @@ export const ELEMENTS: Elements = {
             type: 'radio',
             name: 'Single Selection',
             description: 'Select signle option',
-            icon: ''
+            icon: 'radio-icon'
         },
         {
             type: 'checkbox',
             name: 'Multi Selection',
             description: 'Select multiple options',
-            icon: ''
+            icon: 'checkbox-icon'
         },
         {
             type: 'dropdown',
             name: 'Dropdown',
             description: 'Select options from dropdown',
-            icon: ''
+            icon: 'dropdown-icon'
         }
     ],
     media: [
         {
-            type: 'fileUpload',
+            type: 'file',
             name: 'Upload',
             description: 'Upload documents/media files',
-            icon: ''
+            icon: 'upload-icon'
         }
     ]
 

@@ -26,11 +26,11 @@ export class ElementConfigurationComponent {
     this.group = structuredClone(this.selectedGroup);
   }
 
-  // addNewOption() {
-  //   if (this.formElement) {
-  //     this.formElement.options = [...this.formElement.options, ]
-  //   }
-  // }
+  addNewOption() {
+    if (this.formElement) {
+      this.formElement.options ? this.formElement.options.push({ value: '', id: (this.formElement.options.length + 1).toString()}) : this.formElement.options = [{ value: '', id: '1'}];
+    }
+  }
 
   removeOption(index: number) {
     this.formElement?.options?.splice(index, 1);

@@ -1,79 +1,69 @@
-<div class="tw-p-5">
+<div class="tw-p-5 tw-overflow-y-auto tw-h-full">
         <div class="tw-flex tw-justify-end tw-mb-3">   
-            <i (click)="closeEditDrawer()" class="close-icon tw-inline-block tw-w-[10px] tw-h-[10px]"></i>
+            <i (click)="closeEditDrawer()" class="close-icon tw-inline-block tw-w-[10px] tw-h-[10px] tw-cursor-pointer"></i>
         </div>
         <ng-container *ngIf="formElement">
         <div class="tw-flex tw-gap-2">
-            <div class="tw-mb-3">
+            <div class="tw-mb-3 tw-w-1/2">
                 <label class="tw-font-bold tw-block tw-mb-2">Label</label>
                 <input type="text" [(ngModel)]="formElement.label" class="class-input tw-color-gray-300"/>
             </div>
-            
-            <div class="tw-mb-3">
+            <div class="tw-mb-3 tw-w-1/2">
                 <label class="tw-font-bold tw-block tw-mb-2">Description</label>
                 <input type="text" [(ngModel)]="formElement.description" class="class-input tw-color-gray-300"/>
             </div>
         </div>
-        
         <div class="tw-flex tw-gap-2">
-
-        <div class="tw-mb-3">
-                <label class="tw-font-bold tw-block tw-mb-2">PLACEHOLDER</label>
-                <input type="text" [(ngModel)]="formElement.placeholder" class="class-input tw-color-gray-300"/>
-        </div>
-
-            <div class="tw-mb-3">
-                <label class="tw-font-bold tw-block tw-mb-2">DEFAULT VALUE</label>
+            <div class="tw-mb-3 tw-w-1/2">
+                    <label class="tw-font-bold tw-block tw-mb-2">Placeholder</label>
+                    <input type="text" [(ngModel)]="formElement.placeholder" class="class-input tw-color-gray-300"/>
+            </div>
+            <div class="tw-mb-3 tw-w-1/2">
+                <label class="tw-font-bold tw-block tw-mb-2">Default Value</label>
                 <input type="text" [(ngModel)]="formElement.defaultValue" class="class-input tw-color-gray-300"/>
             </div>
         </div>
-
-        <div class="tw-flex tw-gap-2">
-
-            <div class="tw-mb-3">
-                <label class="tw-font-bold tw-block tw-mb-2">MIN LENGTH</label>
+        <div class="tw-flex tw-gap-2" *ngIf="formElement.type === 'number' || formElement.type === 'text' || formElement.type === 'textarea'">
+            <div class="tw-mb-3 tw-w-1/2">
+                <label class="tw-font-bold tw-block tw-mb-2">Min Length</label>
                 <input type="text" [(ngModel)]="formElement.minLength" class="class-input tw-color-gray-300"/>
             </div>
-
-            <div class="tw-mb-3">
-                <label class="tw-font-bold tw-block tw-mb-2">MAX LENGTH</label>
+            <div class="tw-mb-3 tw-w-1/2">
+                <label class="tw-font-bold tw-block tw-mb-2">Max Length</label>
                 <input type="text" [(ngModel)]="formElement.maxLength" class="class-input tw-color-gray-300"/>
-            </div>
-        
+            </div>      
         </div>
-
-        <div class="tw-flex tw-gap-2">
-
-
-            <div class="tw-mb-3">
-                <label class="tw-font-bold tw-block tw-mb-2">MIN VALUE</label>
+        <div class="tw-flex tw-gap-2" *ngIf="formElement.type === 'number'">
+            <div class="tw-mb-3 tw-w-1/2">
+                <label class="tw-font-bold tw-block tw-mb-2">Min value</label>
                 <input type="text" [(ngModel)]="formElement.minValue" class="class-input tw-color-gray-300"/>
             </div>
-
-            <div class="tw-mb-3">
-                <label class="tw-font-bold tw-block tw-mb-2">MAX VALUE</label>
+            <div class="tw-mb-3 tw-w-1/2">
+                <label class="tw-font-bold tw-block tw-mb-2">Max value</label>
                 <input type="text" [(ngModel)]="formElement.maxValue" class="class-input tw-color-gray-300"/>
             </div>
-
         </div>
-
+        <div class="tw-mb-3" *ngIf="formElement.type === 'radio' || formElement.type === 'dropdown'">
+            <div class="tw-flex tw-items-center tw-justify-between tw-mb-3 tw-gap-3 tw-w-[70%]">
+                <label class="tw-font-bold tw-block tw-mr-3">Options</label>
+                <div (click)="addNewOption()" class="tw-flex tw-items-center tw-cursor-pointer">
+                    <i class="add-icon tw-inline-block tw-w-[20px] tw-h-[20px] tw-pr-3"></i>
+                    <a class="color-primary"> {{ 'Add Option' }}</a>
+                </div>
+            </div>
+            <div *ngFor="let option of formElement.options; let index = index" class="tw-flex tw-gap-2 tw-mb-3 tw-items-center tw-w-[70%]">
+                <input class="class-input" type="text" [(ngModel)]="option.value" />
+                <i (click)="removeOption(index)" class="delete-icon tw-w-[20px] tw-h-[20px] tw-inline-block"></i>
+            </div>
+        </div>
         <div class="tw-mb-3 tw-flex tw-items-center">
-            <label class="tw-font-bold tw-block tw-mr-3">REQUIRED</label>
-            <input type="checkbox" [(ngModel)]="formElement.required" />
+            <label class="tw-font-bold tw-block tw-mr-3">Required</label>
+            <input type="checkbox" [(ngModel)]="formElement.required"  class="tw-cursor-pointer"/>
         </div>
-
         <div class="tw-mb-3 tw-flex tw-items-center">
-            <label class="tw-font-bold tw-block tw-mr-3">READ ONLY</label>
-            <input type="checkbox" [(ngModel)]="formElement.readOnly" />
+            <label class="tw-font-bold tw-block tw-mr-3">Read Only</label>
+            <input type="checkbox" [(ngModel)]="formElement.readOnly" class="tw-cursor-pointer"/>
         </div>
-
-        <!-- <label>Options</label>
-        <p (click)="addNewOption()"> {{ 'Add Option' }}</p>
-        <div *ngFor="let option of formElement.options; let index = index">
-            <label>{{option.id}}</label>
-            <input type="text" [(ngModel)]="option.value" />
-            <i (click)="removeOption(index)" class="delete-icon tw-w-[10px] tw-h-[10px] tw-inline-block"></i>
-        </div> -->
     </ng-container>
     <ng-container *ngIf="!formElement">
         <div class="tw-mb-3">

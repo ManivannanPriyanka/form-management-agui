@@ -7,11 +7,12 @@ import { FormElement } from '../../interfaces/formElement.interface';
 import { ELEMENTS } from '../../constants/elements';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, copyArrayItem, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Elements } from '../../interfaces/elements.interface';
+import { FormpreviewComponent } from '../formpreview/formpreview.component';
 
 @Component({
   selector: 'app-formgroupshome',
   standalone: true,
-  imports: [CommonModule, ElementConfigurationComponent, DragDropModule, CdkDrag, CdkDropList, CdkDropListGroup],
+  imports: [CommonModule, ElementConfigurationComponent, DragDropModule, CdkDrag, CdkDropList, CdkDropListGroup, FormpreviewComponent],
   templateUrl: './formgroupshome.component.html',
   styleUrl: './formgroupshome.component.scss'
 })
@@ -25,6 +26,7 @@ export class FormgroupshomeComponent {
   selectedFormElement = {} as FormElement | null;
   elements = ELEMENTS;
   defaultGroup: Group = {} as Group;
+  showPreviewModal = signal(false);
 
   ngOnInit() {
     this.groups = this._formGroupService.getGroups();
@@ -128,6 +130,10 @@ export class FormgroupshomeComponent {
     if (Object.keys(filteredElements).length) {
       this.elements = filteredElements;
     }
+  }
+
+  openPreviewModal() {
+    this.showPreviewModal.set(true);
   }
 
 }
