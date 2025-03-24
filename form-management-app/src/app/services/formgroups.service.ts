@@ -17,6 +17,9 @@ export class FormgroupsService {
   uniqueIds = new Set<string>();
 
   getGroups() {
+    if (localStorage.getItem('groups')) {
+      return this.getGroupsFromLocalStorage();
+    }
     return [this.defaultGroup];
   }
 
@@ -36,6 +39,14 @@ export class FormgroupsService {
 
   removeGroupsFromLocalStorage() {
     localStorage.removeItem('groups');
+  }
+
+  getGroupsFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('groups') || '[]');
+  }
+
+  isGroupStoredOnLocalStorage() {
+    return localStorage.getItem('groups') ? true : false;
   }
 
 

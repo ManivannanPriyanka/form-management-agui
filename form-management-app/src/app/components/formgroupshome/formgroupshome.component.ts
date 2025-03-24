@@ -32,8 +32,10 @@ export class FormgroupshomeComponent {
     this.groups = this._formGroupService.getGroups();
     this.selectedGroup = this.groups[0];
     this.defaultGroup = this.groups.filter(group => group.isDefault)[0];
-    //Set data on Local Storage
-    this.setDataOnLocalStorage();
+    if (!this._formGroupService.isGroupStoredOnLocalStorage()) {
+      //Set data on Local Storage
+      this.setDataOnLocalStorage();
+    }
   }
 
   createNewGroup() {
@@ -74,11 +76,6 @@ export class FormgroupshomeComponent {
     this.setDataOnLocalStorage();
   }
 
-  onGroupsListDragDrop(event: CdkDragDrop<Group[]>) {
-    moveItemInArray(this.groups, event.previousIndex, event.currentIndex);
-    this.setDataOnLocalStorage();
-  }
-
   deleteElement(index: number) {
     this.selectedGroup.formElements.splice(index, 1);
     this.setDataOnLocalStorage();
@@ -106,10 +103,6 @@ export class FormgroupshomeComponent {
 
   setDataOnLocalStorage() {
     this._formGroupService.setGroupsOnLocalStorage(this.groups);
-  }
-
-  ngOnDestroy() {
-    this._formGroupService.removeGroupsFromLocalStorage();
   }
 
   maintainOrder() {

@@ -26,21 +26,21 @@
         <div class="tw-flex tw-gap-2" *ngIf="formElement.type === 'number' || formElement.type === 'text' || formElement.type === 'textarea'">
             <div class="tw-mb-3 tw-w-1/2">
                 <label class="tw-font-bold tw-block tw-mb-2">Min Length</label>
-                <input type="text" [(ngModel)]="formElement.minLength" class="class-input tw-color-gray-300"/>
+                <input type="number" [(ngModel)]="formElement.minLength" class="class-input tw-color-gray-300"/>
             </div>
             <div class="tw-mb-3 tw-w-1/2">
                 <label class="tw-font-bold tw-block tw-mb-2">Max Length</label>
-                <input type="text" [(ngModel)]="formElement.maxLength" class="class-input tw-color-gray-300"/>
+                <input type="number" [(ngModel)]="formElement.maxLength" class="class-input tw-color-gray-300"/>
             </div>      
         </div>
         <div class="tw-flex tw-gap-2" *ngIf="formElement.type === 'number'">
             <div class="tw-mb-3 tw-w-1/2">
                 <label class="tw-font-bold tw-block tw-mb-2">Min value</label>
-                <input type="text" [(ngModel)]="formElement.minValue" class="class-input tw-color-gray-300"/>
+                <input type="number" [(ngModel)]="formElement.minValue" class="class-input tw-color-gray-300"/>
             </div>
             <div class="tw-mb-3 tw-w-1/2">
                 <label class="tw-font-bold tw-block tw-mb-2">Max value</label>
-                <input type="text" [(ngModel)]="formElement.maxValue" class="class-input tw-color-gray-300"/>
+                <input type="number" [(ngModel)]="formElement.maxValue" class="class-input tw-color-gray-300"/>
             </div>
         </div>
         <div class="tw-mb-3" *ngIf="formElement.type === 'radio' || formElement.type === 'dropdown'">
