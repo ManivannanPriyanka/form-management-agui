@@ -1,5 +1,5 @@
-<div *ngIf="showEditDrawer()" class="tw-fixed tw-w-full tw-h-full tw-z-[1000] tw-bg-gray-100 overlay-bg"></div>
-<div class="tw-grid tw-grid-cols-4 tw-gap-4 tw-h-screen tw-p-3" [ngClass]="{'tw-pointer-events-none tw-overflow-hidden': showEditDrawer()}">
+<div *ngIf="showEditDrawer() || showPreviewModal()" class="tw-fixed tw-w-full tw-h-full tw-z-[1000] tw-bg-gray-100 overlay-bg"></div>
+<div class="tw-grid tw-grid-cols-4 tw-gap-4 tw-h-screen tw-p-3" [ngClass]="{'tw-pointer-events-none tw-overflow-hidden': showEditDrawer() || showPreviewModal()}">
     <div class="tw-col-span-1 tw-pt-3">
         <div class="tw-flex tw-justify-between tw-mb-3">
             <b>Field Groups</b>
@@ -8,11 +8,11 @@
                 <p class="tw-text-[#29c3e6] tw-font-bold">{{'Create new'}}</p>
             </div>
         </div>
-        <div class="border-bottom tw-mb-3">
+        <div class="border-bottom-gray tw-mb-3">
             <ng-container *ngTemplateOutlet="groupTemplate; context: {group: defaultGroup}"></ng-container>
         </div>
         <div cdkDropList (cdkDropListDropped)="onGroupsListDragDrop($event)">
-            <div *ngFor="let group of groups" cdkDrag>
+            <div *ngFor="let group of groups" cdkDrag class="tw-cursor-move">
                 <ng-container *ngIf="!group.isDefault">
                     <ng-container *ngTemplateOutlet="groupTemplate; context: {group: group}"></ng-container>
                 </ng-container>
@@ -21,25 +21,31 @@
     </div>
     <ng-container cdkDropListGroup>
         <div *ngIf="selectedGroup" class="tw-col-span-2 tw-bg-gray-300 tw-p-4" cdkDropList="GroupsList" (cdkDropListDropped)="drop($event)" [cdkDropListData]="selectedGroup.formElements">
+            <div class="tw-flex tw-justify-end tw-mb-3">
+                <button (click)="openPreviewModal()" class="button">PREVIEW</button>
+            </div>
             <div class="tw-bg-white tw-border tw-border-solid tw-rounded-[4px] tw-p-3 tw-mb-3">
                 <div class="tw-flex tw-justify-between">
                     <b>{{ selectedGroup.name }}</b>
                     <div>
                         <i (click)="editDetails(null, true)" class="edit-icon tw-w-[16px] tw-h-[16px] tw-inline-block tw-cursor-pointer"></i>
-                        <i *ngIf="!selectedGroup.isDefault" (click)="deleteGroup(selectedGroup)" class="delete-icon tw-w-[16px] tw-h-[17px] tw-inline-block tw-ml-2"></i>
+                        <i *ngIf="!selectedGroup.isDefault" (click)="deleteGroup(selectedGroup)" class="delete-icon tw-w-[16px] tw-h-[17px] tw-inline-block tw-ml-2 tw-cursor-pointer"></i>
                     </div>
                 </div>
                 <p class="tw-text-gray-400">{{selectedGroup.description}}</p>
             </div>
-            <div *ngFor="let formElement of selectedGroup.formElements; let index=index" cdkDrag [cdkDragData]="{from: 'group', data: formElement}" class="tw-bg-white tw-border tw-border-solid tw-rounded-[4px] tw-p-3 tw-mb-3">
-                <div class="tw-flex tw-justify-between">
-                    <b>{{ formElement.label }}</b>
-                    <div >
-                        <i (click)="editDetails(formElement)" class="edit-icon tw-w-[16px] tw-h-[16px] tw-inline-block tw-cursor-pointer"></i>
-                        <i *ngIf="!selectedGroup.isDefault" (click)="deleteElement(index)" class="delete-icon tw-w-[16px] tw-h-[17px] tw-inline-block tw-ml-2"></i>
+            <div *ngFor="let formElement of selectedGroup.formElements; let index=index" cdkDrag [cdkDragData]="{from: 'group', data: formElement}" class="tw-bg-white tw-border tw-border-solid tw-rounded-[4px] tw-p-3 tw-mb-3 tw-cursor-move tw-flex tw-justify-between">
+                <div class="tw-flex tw-items-center">
+                    <i class="drag-icon tw-w-[10px] tw-h-[10px] tw-inline-block tw-mr-4"></i>
+                    <div>
+                        <b>{{ formElement.label }}</b>
+                        <p class="tw-text-gray-400">{{formElement.description}}</p>
                     </div>
                 </div>
-                <p class="tw-text-gray-400">{{formElement.description}}</p>
+                <div>
+                    <i (click)="editDetails(formElement)" class="edit-icon tw-w-[16px] tw-h-[16px] tw-inline-block tw-cursor-pointer"></i>
+                    <i *ngIf="!selectedGroup.isDefault" (click)="deleteElement(index)" class="delete-icon tw-w-[16px] tw-h-[17px] tw-inline-block tw-ml-2"></i>
+                </div>            
             </div>
         </div>
         <div class="tw-col-span-1 tw-bg-white tw-py-3" cdkDropList="ElementsList" cdkDropListSortingDisabled (cdkDropListDropped)="drop($event)">
@@ -47,7 +53,7 @@
             <input class="search tw-cursor-pointer tw-inline-block tw-border-none tw-rounded-[8px] tw-w-full tw-p-2 tw-bg-gray-100" type="text" placeholder="Search anything" (input)="onSearch($event)"/>
             <div *ngFor="let element of elements | keyvalue: maintainOrder" class="tw-mt-3">
                 <label class="tw-mb-3 tw-font-semibold tw-text-gray-300 tw-text-xs">{{element.key | uppercase}}</label>
-                <div cdkDrag [cdkDragData]="{from: 'formElements' , data: value}" *ngFor="let value of element.value" class="tw-flex tw-items-center tw-mb-2">
+                <div cdkDrag [cdkDragData]="{from: 'formElements' , data: value}" *ngFor="let value of element.value" class="tw-flex tw-items-center tw-mb-2 tw-cursor-move">
                     <ng-container *ngTemplateOutlet="elementsTemplate; context: {element: value}"></ng-container>
                 </div>
             </div>
@@ -56,21 +62,27 @@
     </ng-container>
 </div>
 
-<div *ngIf="showEditDrawer()" class="tw-absolute tw-top-0 tw-right-0 tw-h-screen tw-w-[30%] tw-bg-white tw-border tw-border-solid tw-border-grey tw-z-[1100] drawer-animation">
-    <app-element-configuration [selectedFormElement]="selectedFormElement" [showEditDrawer]="showEditDrawer" [selectedGroup]="selectedGroup" (updatedFormElement)="updateFormElement($event)" (updatedGroup)="updateGroup($event)"></app-element-configuration>
-</div>
-
+<ng-template #groupTemplate let-group="group"> 
+    <div (click)="displayGroupDetails(group)" class="tw-border tw-border-solid tw-border-gray-300 tw-rounded-[4px] tw-p-1 tw-mb-3 tw-font-semibold tw-flex tw-items-center" [ngClass]="{'border-blue': selectedGroup && selectedGroup.id === group.id}">
+        <i *ngIf="!group.isDefault" class="drag-icon tw-inline-block tw-w-[10px] tw-h-[10px] tw-mr-3"></i>
+        <p class="faded-black" [ngClass]="{'color-primary' : selectedGroup.id === group.id}">{{ group.name }}</p>
+    </div>
+</ng-template>
 
 <ng-template #elementsTemplate let-element="element">
-    <i [class]="element.icon" class="tw-w-[30px] tw-h-[30px] tw-inline-block tw-bg-gray-100 tw-rounded-[4px]"></i>
+    <div class="tw-w-[30px] tw-h-[30px] tw-flex tw-justify-center tw-items-center tw-bg-gray-100 tw-rounded-[4px]">
+        <i class="tw-inline-block tw-h-[20px] tw-w-[20px]" [ngClass]="element.icon" ></i>
+    </div>
     <div class="tw-pl-2">
         <b>{{ element.name }}</b>
         <p class="tw-text-gray-400">{{ element.description }}</p>
     </div>
 </ng-template>
 
-<ng-template #groupTemplate let-group="group"> 
-    <div (click)="displayGroupDetails(group)" class="tw-border tw-border-solid tw-border-gray-300 tw-rounded-[4px] tw-p-1 tw-mb-3 tw-font-semibold" [ngClass]="{'border-blue': selectedGroup && selectedGroup.id === group.id}">
-        <p class="faded-black" [ngClass]="{'color-primary' : selectedGroup.id === group.id}">{{ group.name }}</p>
-    </div>
-</ng-template>
+<div *ngIf="showEditDrawer()" class="tw-absolute tw-top-0 tw-right-0 tw-h-screen tw-w-[60%] md:tw-w-[50%] lg:tw-w-[40%] xl:tw-w-[30%] tw-bg-white tw-border tw-border-solid tw-border-grey tw-z-[1100] drawer-animation tw-rounded-[4px]">
+    <app-element-configuration [selectedFormElement]="selectedFormElement" [showEditDrawer]="showEditDrawer" [selectedGroup]="selectedGroup" (updatedFormElement)="updateFormElement($event)" (updatedGroup)="updateGroup($event)"></app-element-configuration>
+</div>
+
+<div *ngIf="showPreviewModal()" class="tw-absolute tw-top-[30%] tw-left-[30%] tw-z-[1100] tw-bg-white tw-w-[50%] tw-h-[50%] tw-border tw-border-solid tw-border-grey tw-p-4">
+    <app-formpreview [selectedGroup]="selectedGroup" [showPreviewModal]="showPreviewModal"></app-formpreview>
+</div>

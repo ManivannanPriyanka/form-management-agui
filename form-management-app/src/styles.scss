@@ -27,3 +27,36 @@ body {
 .color-primary {
     color: $primary-color;
 }
+
+
+.button {
+    background-color: $primary-color;
+    color: $black;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid $primary-color;
+    min-height: 24px;
+    min-width: 56px;
+    font-size: 12px;
+}
+
+.button-disabled {
+    background-color: $gray;
+    border: 1px solid $gray;
+    pointer-events: none;
+}
+
+.class-input {
+    border: 1px solid $gray;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px;
+    height: 32px;
+}
+
+.class-input:focus {
+    border: 1px solid $primary-color;
+    box-shadow: 0 0 5px $primary-color;
+    outline: none;
+}

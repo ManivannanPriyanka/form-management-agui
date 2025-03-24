@@ -5,7 +5,7 @@
 }
 
 .drawer-animation {
-    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
 }
 
@@ -18,7 +18,6 @@
 }
 
 .search:focus {
-    // $primary-border: #2196f3;
     outline: none;
     border: 1px solid $primary-color;
     box-shadow: 0 0 5px $primary-color;
@@ -28,11 +27,55 @@
     background: url('../../../assets/icons/add.svg') center/cover no-repeat;
 }
 
-.border-bottom {
+.border-bottom-gray {
     border-bottom: 1px solid $gray;
 }
 
 .border-blue {
     border: 1px solid $primary-color;
+}
+
+.text-icon {
+    background: url('../../../assets/icons/text.svg') center/cover no-repeat;
+}
+
+.radio-icon {
+    background: url('../../../assets/icons/radio.svg') center/cover no-repeat;
+}
+
+.checkbox-icon {
+    background: url('../../../assets/icons/checkbox.svg') center/cover no-repeat;
+}
+
+.dropdown-icon {
+    background: url('../../../assets/icons/dropdown.svg') center/cover no-repeat;
+}
+
+.date-icon {
+    background: url('../../../assets/icons/calendar.svg') center/cover no-repeat;
+}
+
+.time-icon {
+    background: url('../../../assets/icons/time.svg') center/cover no-repeat;
+}
+
+.upload-icon {
+    background: url('../../../assets/icons/upload.svg') center/cover no-repeat;
+}
+
+.date-and-time-icon {
+    background: url('../../../assets/icons/date-and-time.jpg') center/cover no-repeat;
+}
+
+.number-icon {
+    background: url('../../../assets/icons/number.png') center/cover no-repeat;
+}
+
+.multi-line-icon {
+    background: url('../../../assets/icons/multi-text.svg') center/cover no-repeat;
+}
+
+.drag-icon {
+    background: url('../../../assets/icons/drag.svg') center/cover no-repeat;
 }
 
