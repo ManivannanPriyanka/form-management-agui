@@ -1,14 +1,20 @@
 
-<div [formGroup]="dynamicForm">
+<div [formGroup]="dynamicForm" class="tw-bg-white tw-p-4 tw-rounded-[8px] tw-w-[350px] modal-shadow tw-max-h-[70vh] tw-overflow-y-auto">
     <div class="tw-flex tw-justify-between tw-mb-2">
         <div>
             <b>{{selectedGroup.name}}</b>
             <p class="tw-text-xs">{{selectedGroup.description}}</p>
         </div>
-        <i class="tw-w-[10px] tw-h-[10px] tw-inline-block close-icon"></i>
+        <i class="tw-w-[10px] tw-h-[10px] tw-inline-block close-icon tw-cursor-pointer" (click)="closePreviewModal()"></i>
     </div>
     <div *ngFor="let element of selectedGroup.formElements" class="tw-mb-2">
-        <label class="tw-font-bold tw-block tw-mb-2" >{{element.label}}</label>
+        <div class="tw-flex tw-items-center" *ngIf="element.type !== 'checkbox'">
+            <label class="tw-font-bold tw-block tw-mb-2">{{element.label}}</label>
+            <span *ngIf="element.required" class="tw-text-red-500 tw-font-bold tw-pl-1">*</span>
+        </div>
+        <ng-container *ngIf="dynamicForm.get(element.label)?.dirty && dynamicForm.get(element.label)?.invalid">
+            <ng-container *ngTemplateOutlet="errorTemplate; context: {errors: dynamicForm.get(element.label)?.errors, element: element}"></ng-container>
+        </ng-container> 
         <ng-container [ngSwitch]="element.type">
             <input *ngSwitchCase="'text'" class="class-input" type="text" [formControlName]="element.label" />
             <textarea *ngSwitchCase="'textarea'" class="class-input" [formControlName]="element.label"></textarea>
@@ -16,15 +22,19 @@
             <input *ngSwitchCase="'date'"  class="class-input" type="date" [formControlName]="element.label" />
             <input *ngSwitchCase="'time'"  class="class-input" type="time" [formControlName]="element.label" />
             <input *ngSwitchCase="'dateandtime'" type="datetime-local" class="class-input" [formControlName]="element.label" />
-            <input *ngSwitchCase="'checkbox'" type="checkbox" [formControlName]="element.label" />
+            <div *ngSwitchCase="'checkbox'" class="tw-flex tw-items-center">
+                <input type="checkbox" [formControlName]="element.label" />
+                <label class="tw-pl-2">{{element.label}}</label>
+                <span class="tw-text-red-500 tw-font-bold tw-px-1">*</span>
+            </div>
             <ng-container *ngSwitchCase="'radio'">
-                <div *ngFor="let option of element.options">
+                <div *ngFor="let option of element.options" class="tw-flex tw-items-center tw-gap-2">
                     <input type="radio" [formControlName]="element.label" [value]="option.value" />
                     <label>{{option.value}}</label>
                 </div>
             </ng-container>
             <ng-container *ngSwitchCase="'dropdown'">
-                <select [formControlName]="element.label">
+                <select [formControlName]="element.label" class="class-input !tw-px-2 !tw-py-0">
                     <option *ngFor="let option of element.options" [value]="option.value">{{option.value}}</option>
                 </select>
             </ng-container>
@@ -32,3 +42,15 @@
         </ng-container>
     </div>
 </div>
+
+<ng-template #errorTemplate let-errors="errors" let-element="element">
+    <ng-container *ngFor="let error of errors | keyvalue">
+        <ng-container [ngSwitch]="error.key">
+            <p *ngSwitchCase="'minlength'" class="tw-text-red-500 tw-text-xs">Minimum length not ment</p>
+            <p *ngSwitchCase="'maxlength'" class="tw-text-red-500 tw-text-xs">Maximum length exceeded.</p>
+            <p *ngSwitchCase="'min'" class="tw-text-red-500 tw-text-xs">Minimum value should be {{element.minValue}}</p>
+            <p *ngSwitchCase="'max'" class="tw-text-red-500 tw-text-xs">Maximum value should be {{element.maxValue}}</p>
+            <p *ngSwitchCase="'required'" class="tw-text-red-500 tw-text-xs">Required</p>
+        </ng-container>
+    </ng-container>
+</ng-template>
