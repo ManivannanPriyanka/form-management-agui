@@ -1,3 +1,4 @@
+
 /* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
@@ -8,6 +9,7 @@ $primary-color: #29c3e6;
 $black: #000000;
 $gray: #7f7f7f;
 $white: #ffffff;
+$red: red;
 
 body {
     font-size: 14px;
@@ -59,4 +61,11 @@ body {
     border: 1px solid $primary-color;
     box-shadow: 0 0 5px $primary-color;
     outline: none;
+}
+
+.input-error, input-error:focus {
+    input {
+        border: 1px solid $red !important;
+        box-shadow: 0 0 5px $red !important;
+    }
 }

@@ -1,4 +1,5 @@
 
+
 <div [formGroup]="dynamicForm" class="tw-bg-white tw-p-4 tw-rounded-[8px] tw-w-[350px] modal-shadow tw-max-h-[70vh] tw-overflow-y-auto">
     <div class="tw-flex tw-justify-between tw-mb-2">
         <div>
@@ -7,16 +8,16 @@
         </div>
         <i class="tw-w-[10px] tw-h-[10px] tw-inline-block close-icon tw-cursor-pointer" (click)="closePreviewModal()"></i>
     </div>
-    <div *ngFor="let element of selectedGroup.formElements" class="tw-mb-2">
-        <div class="tw-flex tw-items-center" *ngIf="element.type !== 'checkbox'">
-            <label class="tw-font-bold tw-block tw-mb-2">{{element.label}}</label>
+    <div *ngFor="let element of selectedGroup.formElements" class="tw-mb-3 tw-relative">
+        <div class="tw-flex tw-items-center tw-mb-3" *ngIf="element.type !== 'checkbox'">
+            <label class="tw-font-bold tw-block">{{element.label}}</label>
             <span *ngIf="element.required" class="tw-text-red-500 tw-font-bold tw-pl-1">*</span>
         </div>
         <ng-container *ngIf="dynamicForm.get(element.label)?.dirty && dynamicForm.get(element.label)?.invalid">
-            <ng-container *ngTemplateOutlet="errorTemplate; context: {errors: dynamicForm.get(element.label)?.errors, element: element}"></ng-container>
+                <ng-container *ngTemplateOutlet="errorTemplate; context: {errors: dynamicForm.get(element.label)?.errors, element: element}"></ng-container>
         </ng-container> 
-        <ng-container [ngSwitch]="element.type">
-            <input *ngSwitchCase="'text'" class="class-input" type="text" [formControlName]="element.label" />
+        <div [ngSwitch]="element.type" [ngClass]="{'input-error' : dynamicForm.get(element.label)?.dirty && dynamicForm.get(element.label)?.invalid}">
+            <input *ngSwitchCase="'text'" class="class-input" type="text" [formControlName]="element.label"/>
             <textarea *ngSwitchCase="'textarea'" class="class-input" [formControlName]="element.label"></textarea>
             <input *ngSwitchCase="'number'" class="class-input" type="number" [formControlName]="element.label" />
             <input *ngSwitchCase="'date'"  class="class-input" type="date" [formControlName]="element.label" />
@@ -39,18 +40,18 @@
                 </select>
             </ng-container>
             <input *ngSwitchCase="'file'" type="file" [formControlName]="element.label" />
-        </ng-container>
+        </div>
     </div>
 </div>
 
 <ng-template #errorTemplate let-errors="errors" let-element="element">
     <ng-container *ngFor="let error of errors | keyvalue">
         <ng-container [ngSwitch]="error.key">
-            <p *ngSwitchCase="'minlength'" class="tw-text-red-500 tw-text-xs">Minimum length not ment</p>
-            <p *ngSwitchCase="'maxlength'" class="tw-text-red-500 tw-text-xs">Maximum length exceeded.</p>
-            <p *ngSwitchCase="'min'" class="tw-text-red-500 tw-text-xs">Minimum value should be {{element.minValue}}</p>
-            <p *ngSwitchCase="'max'" class="tw-text-red-500 tw-text-xs">Maximum value should be {{element.maxValue}}</p>
-            <p *ngSwitchCase="'required'" class="tw-text-red-500 tw-text-xs">Required</p>
+            <p *ngSwitchCase="'minlength'" class="tw-text-red-500 tw-text-xs tw-absolute tw-top-[17px]">Minimum length not met</p>
+            <p *ngSwitchCase="'maxlength'" class="tw-text-red-500 tw-text-xs tw-absolute tw-top-[17px]">Maximum length exceeded.</p>
+            <p *ngSwitchCase="'min'" class="tw-text-red-500 tw-text-xs tw-absolute tw-top-[17px]">Minimum value should be {{element.minValue}}</p>
+            <p *ngSwitchCase="'max'" class="tw-text-red-500 tw-text-xs tw-absolute tw-top-[17px]">Maximum value should be {{element.maxValue}}</p>
+            <p *ngSwitchCase="'required'" class="tw-text-red-500 tw-text-xs tw-absolute tw-top-[17px]">Required</p>
         </ng-container>
     </ng-container>
 </ng-template>
